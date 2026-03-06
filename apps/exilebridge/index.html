@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Hat Enterprise Modernization Plays - US Distribution</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ibm: {
+                            blue: '#0f62fe',
+                            dark: '#161616',
+                            gray: '#f4f4f4',
+                            light: '#ffffff'
+                        },
+                        redhat: {
+                            red: '#EE0000',
+                            dark: '#CC0000',
+                            light: '#FFF0F0'
+                        },
+                        warm: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#44403c',
+                            900: '#292524'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #fafaf9; color: #292524; }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 450px; } }
+
+        .play-block {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .play-block.active {
+            border-color: #EE0000;
+            background-color: #FFF0F0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(238, 0, 0, 0.1);
+        }
+        .play-block:hover:not(.active) {
+            border-color: #a8a29e;
+            background-color: #ffffff;
+        }
+
+        .mapping-table th {
+            position: sticky;
+            top: 0;
+            background-color: #f5f5f4;
+            z-index: 10;
+        }
+        .mapping-table tr:hover td { background-color: #FFF0F0; }
+    </style>
+</head>
+<body class="antialiased selection:bg-redhat-red selection:text-white">
+
+    <nav class="fixed w-full bg-warm-50/90 backdrop-blur-md z-50 border-b border-warm-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🔴</span>
+                    <span class="font-bold text-xl tracking-tight text-ibm-dark">One IBM / Red Hat GTM</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#market" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">Market Drivers</a>
+                    <a href="#plays" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">Sales Plays</a>
+                    <a href="#mapping" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">US Distribution Mapping</a>
+                    <a href="#impact" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">TCO Impact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-4xl">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-ibm-dark text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">US Distribution Market</span>
+                <span class="bg-redhat-light text-redhat-red text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border border-red-200">Enterprise Modernization</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-ibm-dark mb-6 leading-tight">Red Hat Sales Plays & Account Strategy</h1>
+            <p class="text-2xl text-warm-800 mb-8 font-light">Capitalizing on Infrastructure Disruption & AI Adoption</p>
+            <p class="text-lg text-warm-800 mb-8 border-l-4 border-redhat-red pl-4">
+                The enterprise landscape is facing massive shifts: disruptive hypervisor licensing changes, the urgent mandate for sovereign GenAI, and the need for automation at scale. These consolidated sales plays position us to lead infrastructure modernization across the US Distribution sector (Retail, Logistics, Travel).
+            </p>
+            <div class="flex gap-4">
+                <a href="#mapping" class="bg-redhat-red text-white px-6 py-3 rounded-md font-semibold hover:bg-redhat-dark transition-colors shadow-lg">View Account Mapping</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24">
+
+        <!-- SECTION 1: MARKET CATALYSTS -->
+        <section id="market" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🌪️</span> Key Market Catalysts
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Our 2026 sales plays are directly aligned with the most pressing challenges IT leaders face today, creating immediate, high-value pipeline opportunities.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">💸</div>
+                    <h3 class="font-bold text-lg mb-2">The Virtualization Tax</h3>
+                    <p class="text-sm text-warm-800">Broadcom's acquisition of VMware has triggered enterprise-wide audits. Clients are facing 100% to 1000%+ renewal increases, seeking urgent alternatives to reduce vendor lock-in.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h3 class="font-bold text-lg mb-2">Shadow AI & Privacy</h3>
+                    <p class="text-sm text-warm-800">Organizations want to deploy LLMs but are terrified of data leakage in public clouds. They need platforms that allow model training and inference securely on-premises or at the edge.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">⚙️</div>
+                    <h3 class="font-bold text-lg mb-2">Operational Complexity</h3>
+                    <p class="text-sm text-warm-800">Disparate environments and fragmented tooling create immense toil. Automation is no longer optional; it is required to manage hybrid cloud scale and bridge the IT skills gap.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SALES PLAYS -->
+        <section id="plays" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🎯</span> The Core Sales Plays
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Select a play below to view the market hook, strategic value, and corresponding technology focus area for your client conversations.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200 active" onclick="showPlayDetail('osvirt', this)">
+                        <div class="text-2xl mb-2">🖥️</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">OpenShift Virt</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">The VMware Pivot</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('osai', this)">
+                        <div class="text-2xl mb-2">🧠</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">OpenShift AI</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">Hybrid Cloud AI</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('aap', this)">
+                        <div class="text-2xl mb-2">🤖</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Ansible Automation</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">Enterprise Scale</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('lightspeed', this)">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">RH Lightspeed</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">GenAI for IT Ops</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200 sm:col-span-2" onclick="showPlayDetail('rhel', this)">
+                        <div class="text-2xl mb-2">🐧</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Red Hat Enterprise Linux</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">The Standardized Foundation</div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 bg-white p-8 rounded-xl border border-warm-200 shadow-sm flex flex-col justify-center min-h-[350px]">
+                    <div id="play-detail-container" class="space-y-6"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: ACCOUNT MAPPING -->
+        <section id="mapping" class="scroll-mt-24">
+            <div class="mb-10">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🗺️</span> US Distribution Account Mapping
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Strategic alignment of Red Hat sales plays across targeted US Distribution accounts. This matrix highlights primary whitespace opportunities for infrastructure modernization, edge computing, and hybrid AI based on industry dynamics.
+                </p>
+                <div class="flex gap-4 mt-4 text-sm font-semibold">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-redhat-red inline-block"></span> High Priority / Whitespace</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-400 inline-block"></span> Secondary Target</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-warm-200 inline-block"></span> Assess</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-warm-200 overflow-hidden">
+                <div class="overflow-x-auto max-h-[600px] custom-scrollbar">
+                    <table class="w-full text-left border-collapse mapping-table whitespace-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider">Target Account</th>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider">Sub-Industry</th>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider text-center">OpenShift Virt</th>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider text-center">OpenShift AI</th>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider text-center">Ansible / Edge</th>
+                                <th class="p-4 border-b border-warm-200 font-bold text-ibm-dark text-sm uppercase tracking-wider text-center">RHEL Base</th>
+                            </tr>
+                        </thead>
+                        <tbody id="account-table-body" class="text-sm text-warm-800 divide-y divide-warm-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: TCO IMPACT -->
+        <section id="impact" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">📊</span> Business Value: 3-Year TCO Comparison
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    This visualization illustrates the compelling financial argument for migrating from a legacy hypervisor and manual operational model to a modernized Red Hat platform.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-warm-200">
+                <h3 class="text-xl font-semibold mb-2">Projected 3-Year TCO (Relative Scale)</h3>
+                <p class="text-sm text-warm-800 mb-8 border-l-4 border-redhat-red pl-3">Status Quo (Legacy Virtualization) vs. Red Hat Platform (OpenShift Virt + Ansible)</p>
+
+                <div class="chart-container">
+                    <canvas id="tcoChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-ibm-dark text-white py-8 border-t border-redhat-dark mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <p class="text-sm text-warm-400">Information Architected Interactive Partner Presentation.</p>
+                <p class="text-xs text-warm-500 mt-1">© 2026 Red Hat & IBM. Synthesized for Internal GTM Planning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const PlayData = {
+            'osvirt': {
+                icon: '🖥️',
+                title: 'OpenShift Virtualization',
+                tag: 'The VMware/Broadcom Replacement Play',
+                description: 'Allows organizations to run traditional Virtual Machines (VMs) alongside modern containerized workloads on a single, unified Kubernetes platform.',
+                value: 'Consolidates infrastructure silos, optimizes compute resources, and significantly lowers TCO, helping clients escape severe legacy licensing hikes.'
+            },
+            'osai': {
+                icon: '🧠',
+                title: 'OpenShift AI',
+                tag: 'On-Premises & Hybrid Cloud Play',
+                description: 'A unified AI/ML platform that provides a consistent environment to build, train, fine-tune, and serve models anywhere—keeping proprietary data behind the corporate firewall.',
+                value: 'Unblocks GenAI adoption for risk-averse enterprises. Provides predictable inference costs compared to public cloud lock-in.'
+            },
+            'aap': {
+                icon: '🤖',
+                title: 'Red Hat Ansible Automation',
+                tag: 'Enterprise Automation at Scale',
+                description: 'An enterprise-grade platform for scaling IT automation across hybrid clouds, networking, security, and edge devices. Acts as the connective tissue for IT ops.',
+                value: 'Reduces operational toil, bridges IT skill shortages, and pairs exceptionally well with tools like Terraform and HashiCorp Vault for complete lifecycle management.'
+            },
+            'lightspeed': {
+                icon: '⚡',
+                title: 'Red Hat Lightspeed',
+                tag: 'AI-Driven IT Operations',
+                description: 'Generative AI integrated directly into Red Hat products. Uses purpose-built LLMs to translate natural language prompts into syntactically correct Ansible Playbooks.',
+                value: 'Democratizes automation, allowing less experienced staff to build reliable code quickly, while freeing senior engineers from routine troubleshooting.'
+            },
+            'rhel': {
+                icon: '🐧',
+                title: 'Red Hat Enterprise Linux',
+                tag: 'The Essential Foundation',
+                description: 'The industry standard for a secure, hardened, and consistent operating system across physical, virtual, private, and public cloud environments.',
+                value: 'Standardizing on RHEL simplifies life-cycle management, ensures continuous compliance, and provides the baseline telemetry needed for proactive maintenance.'
+            }
+        };
+
+        // 2: High Priority (Red), 1: Secondary (Blue), 0: Assess (Gray)
+        const accountsData = [
+            { name: 'PepsiCo',          industry: 'CPG',         virt: 2, ai: 2, aap: 1, rhel: 2 },
+            { name: 'Delta Airlines',   industry: 'Airlines',    virt: 2, ai: 1, aap: 2, rhel: 2 },
+            { name: 'FedEx',            industry: 'Logistics',   virt: 1, ai: 2, aap: 2, rhel: 2 },
+            { name: 'UPS',              industry: 'Logistics',   virt: 1, ai: 2, aap: 2, rhel: 2 },
+            { name: 'Kroger',           industry: 'Retail',      virt: 2, ai: 2, aap: 1, rhel: 2 },
+            { name: 'Walmart',          industry: 'Retail',      virt: 2, ai: 2, aap: 2, rhel: 2 },
+            { name: 'Marriott',         industry: 'Hospitality', virt: 2, ai: 1, aap: 2, rhel: 2 },
+            { name: 'Home Depot',       industry: 'Retail',      virt: 1, ai: 2, aap: 2, rhel: 2 },
+            { name: 'Ahold',            industry: 'Retail',      virt: 2, ai: 1, aap: 1, rhel: 2 },
+            { name: 'Nike',             industry: 'Retail/CPG',  virt: 1, ai: 2, aap: 1, rhel: 2 },
+            { name: 'American Airlines',industry: 'Airlines',    virt: 2, ai: 1, aap: 2, rhel: 2 },
+            { name: 'Norfolk Southern', industry: 'Transport',   virt: 2, ai: 1, aap: 2, rhel: 2 },
+            { name: 'Carnival',         industry: 'Travel',      virt: 2, ai: 1, aap: 2, rhel: 2 }
+        ];
+
+        function showPlayDetail(key, element) {
+            document.querySelectorAll('.play-block').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+            const data = PlayData[key];
+            const container = document.getElementById('play-detail-container');
+            container.style.opacity = '0';
+
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="flex items-center gap-4 border-b border-warm-200 pb-4">
+                        <div class="text-5xl bg-redhat-light p-3 rounded-lg">${data.icon}</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-ibm-dark">${data.title}</h3>
+                            <span class="inline-block mt-1 bg-redhat-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">${data.tag}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mt-4">
+                        <div>
+                            <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-2">The Solution</h4>
+                            <p class="text-md text-warm-900 leading-relaxed">${data.description}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-2">Strategic Value</h4>
+                            <p class="text-md text-warm-900 leading-relaxed border-l-2 border-redhat-red pl-3">${data.value}</p>
+                        </div>
+                    </div>
+                `;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 150);
+        }
+
+        function renderAccountsTable() {
+            const tbody = document.getElementById('account-table-body');
+
+            const getIndicator = (level) => {
+                if (level === 2) return '<div class="mx-auto w-4 h-4 rounded-full bg-redhat-red shadow-sm"></div>';
+                if (level === 1) return '<div class="mx-auto w-4 h-4 rounded-full bg-blue-400 shadow-sm"></div>';
+                return '<div class="mx-auto w-4 h-4 rounded-full bg-warm-200 shadow-sm"></div>';
+            };
+
+            accountsData.forEach(acc => {
+                const tr = document.createElement('tr');
+                tr.className = 'transition-colors duration-150';
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-ibm-dark">${acc.name}</td>
+                    <td class="p-4 text-warm-600">${acc.industry}</td>
+                    <td class="p-4">${getIndicator(acc.virt)}</td>
+                    <td class="p-4">${getIndicator(acc.ai)}</td>
+                    <td class="p-4">${getIndicator(acc.aap)}</td>
+                    <td class="p-4">${getIndicator(acc.rhel)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function initTCOChart() {
+            const ctx = document.getElementById('tcoChart').getContext('2d');
+
+            const labels = [
+                'Licensing & Software',
+                'Hardware / Infrastructure',
+                'Operational Labor & Maintenance',
+                'Cost of Downtime/Security Events'
+            ];
+
+            const legacyData = [45, 30, 40, 15];
+            const redhatData = [15, 20, 18, 5];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Status Quo (Legacy Virtualization / Manual Ops)',
+                            data: legacyData,
+                            backgroundColor: '#d6d3d1',
+                            borderColor: '#a8a29e',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Red Hat Platform (OS Virt + Ansible + RHEL)',
+                            data: redhatData,
+                            backgroundColor: '#EE0000',
+                            borderColor: '#CC0000',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: "'IBM Plex Sans', sans-serif", weight: 'bold' },
+                                color: '#292524'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.x + ' Units (Relative Cost)';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Relative Cost Impact', font: { weight: 'bold' } },
+                            grid: { color: '#e7e5e4' }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { font: { weight: '600' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTCOChart();
+            renderAccountsTable();
+            showPlayDetail('osvirt', document.querySelector('.play-block'));
+        });
+    </script>
+</body>
+</html>
