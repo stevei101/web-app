@@ -1,0 +1,14 @@
+{{- if .Values.sample.quickburn.large }}
+apiVersion: clusters.ibm.com/v1alpha1
+kind: OpenShiftFyre
+metadata:
+  name: {{ .Values.sample.credentials.user }}-qb-large
+  namespace: {{ default "default" .Release.Namespace }}
+spec:
+  # Add fields here
+  providerSecretRef: fyre-{{ .Values.sample.credentials.user }}-secret
+  ocpVersion: "4.8.27"
+  size: "large"
+  argocd:
+    namespace: {{ .Values.sample.argo.namespace }}
+{{- end }}

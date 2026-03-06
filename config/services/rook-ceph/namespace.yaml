@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rook-ceph
+  labels:
+    kubernetes.io/metadata.name: rook-ceph
+spec:
+  finalizers:
+  - kubernetes
