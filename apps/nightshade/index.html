@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Agentic SDLC - Executive Briefing</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Configuration & Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ibm: {
+                            blue: '#0f62fe',
+                            dark: '#161616',
+                            gray: '#f4f4f4',
+                            light: '#ffffff'
+                        },
+                        warm: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#44403c',
+                            900: '#292524'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+            color: #292524;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f5f5f4; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+
+        .diagram-block {
+            transition: all 0.3s ease;
+        }
+        .diagram-block.active {
+            background-color: #0f62fe;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(15, 98, 254, 0.3);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-ibm-blue selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-warm-50/90 backdrop-blur-md z-50 border-b border-warm-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🌐</span>
+                    <span class="font-bold text-xl tracking-tight text-ibm-dark">IBM Consulting</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#vision" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">The Vision</a>
+                    <a href="#architecture" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Architecture</a>
+                    <a href="#agents" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Agent Profiles</a>
+                    <a href="#roadmap" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Execution</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-3xl">
+            <p class="text-ibm-blue font-semibold tracking-wide uppercase text-sm mb-3">Distribution Market (Retail/CPG)</p>
+            <h1 class="text-5xl font-bold text-ibm-dark mb-6 leading-tight">The Agentic SDLC</h1>
+            <p class="text-2xl text-warm-800 mb-8 font-light">Operationalizing Autonomous AI on Google Cloud.</p>
+            <p class="text-lg text-warm-800 mb-8 border-l-4 border-ibm-blue pl-4">
+                Moving beyond AI assistants into a fully autonomous, agent-driven software development lifecycle—where AI agents review code, trigger deployments, and surface risks without waiting for human initiation.
+            </p>
+            <div class="flex gap-4">
+                <a href="#vision" class="bg-ibm-blue text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors shadow-lg">Explore the Impact</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24">
+
+        <!-- SECTION 1: THE VISION -->
+        <section id="vision" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🔭</span> The Executive Vision
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    This section outlines the paradigm shift from manual, human-initiated AI coding tools to an autonomous workflow. By interacting with the elements below, you can understand how the Agentic SDLC drives massive improvements in velocity, consistency, and platform flexibility across your organization.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <!-- Interactive Paradigm Toggle -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-warm-200">
+                    <h3 class="text-xl font-semibold mb-6">Paradigm Shift: AI-Assisted vs. Agent-Driven</h3>
+
+                    <div class="flex bg-warm-100 p-1 rounded-lg mb-8">
+                        <button id="btn-assisted" class="flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all bg-white shadow text-ibm-blue" onclick="toggleVision('assisted')">Today: AI-Assisted</button>
+                        <button id="btn-agentic" class="flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all text-warm-800 hover:text-ibm-dark" onclick="toggleVision('agentic')">Future: Agent-Driven</button>
+                    </div>
+
+                    <div id="content-assisted" class="space-y-4">
+                        <div class="p-4 bg-warm-50 rounded-lg border-l-4 border-warm-300">
+                            <h4 class="font-bold text-warm-900 mb-1">The Baseline</h4>
+                            <p class="text-warm-800 text-sm">Current AI coding tools (Copilots) rely on human initiation and single-file context. They are <i>assistants</i>, not participants.</p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-warm-800">
+                            <li class="flex items-center gap-2"><span>⚠️</span> Manual trigger required for every action.</li>
+                            <li class="flex items-center gap-2"><span>⚠️</span> Limited to local IDE context.</li>
+                            <li class="flex items-center gap-2"><span>⚠️</span> High cognitive load on the developer.</li>
+                        </ul>
+                    </div>
+
+                    <div id="content-agentic" class="space-y-4 hidden">
+                        <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-ibm-blue">
+                            <h4 class="font-bold text-ibm-dark mb-1">The Evolution</h4>
+                            <p class="text-ibm-dark text-sm">"Agentic SDLC" injects autonomous, event-driven AI agents directly into the CI/CD pipeline. Self-triggering AI workflows.</p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-warm-800">
+                            <li class="flex items-center gap-2"><span>🚀</span> <strong>Velocity:</strong> Drastically reduce PR lead times and MTTR.</li>
+                            <li class="flex items-center gap-2"><span>🛡️</span> <strong>Consistency:</strong> Enforce enterprise-grade security & governance natively.</li>
+                            <li class="flex items-center gap-2"><span>⚖️</span> <strong>Flexibility:</strong> Vendor-neutral (Google Vertex AI & IBM watsonx).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dynamic Chart Container -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-warm-200">
+                    <h3 class="text-xl font-semibold mb-2">Projected Efficiency Impact</h3>
+                    <p class="text-sm text-warm-800 mb-6">Estimated reduction in manual review and recovery cycles.</p>
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                    <p id="chart-caption" class="text-center text-sm font-medium text-warm-800 mt-4">Showing: Copilot / Manual Baseline</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ARCHITECTURE & TECH STACK -->
+        <section id="architecture" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🏗️</span> Target Architecture & Polyglot Stack
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Explore the "Plug-and-Play" AI ecosystem engineered for peak performance on GCP. This section breaks down how we leverage your existing cloud investments without a "rip-and-replace" approach. Click on the layers in the diagram to reveal the technical rationale behind the chosen tech stack.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 bg-white p-6 md:p-8 rounded-xl shadow-sm border border-warm-200">
+
+                <!-- Interactive CSS Diagram -->
+                <div class="lg:col-span-5 flex flex-col justify-center gap-4">
+                    <h3 class="font-bold text-warm-900 mb-2 uppercase tracking-wide text-sm border-b pb-2">Event Flow</h3>
+
+                    <button class="diagram-block p-4 rounded-lg bg-warm-100 border border-warm-200 text-left w-full hover:bg-warm-200 active" onclick="showArchDetail('ingestion', this)">
+                        <div class="font-bold flex items-center gap-2"><span>📥</span> 1. Event Ingestion</div>
+                        <div class="text-xs mt-1 text-inherit">GitLab / GitHub / Jira Webhooks</div>
+                    </button>
+
+                    <div class="flex justify-center text-warm-400">⬇️</div>
+
+                    <button class="diagram-block p-4 rounded-lg bg-warm-100 border border-warm-200 text-left w-full hover:bg-warm-200" onclick="showArchDetail('orchestrator', this)">
+                        <div class="font-bold flex items-center gap-2"><span>🚦</span> 2. API Gateway & Orchestrator</div>
+                        <div class="text-xs mt-1 text-inherit">TypeScript + Bun on Cloud Run</div>
+                    </button>
+
+                    <div class="flex gap-4 w-full">
+                        <div class="flex-1 flex flex-col items-center gap-2">
+                            <div class="text-warm-400">↙️</div>
+                            <button class="diagram-block p-4 rounded-lg bg-warm-100 border border-warm-200 w-full text-center hover:bg-warm-200" onclick="showArchDetail('models', this)">
+                                <div class="font-bold">🧠 AI Engine</div>
+                                <div class="text-xs mt-1">Vertex AI / watsonx</div>
+                            </button>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-2">
+                            <div class="text-warm-400">↘️</div>
+                            <button class="diagram-block p-4 rounded-lg bg-warm-100 border border-warm-200 w-full text-center hover:bg-warm-200" onclick="showArchDetail('workers', this)">
+                                <div class="font-bold">⚙️ Workers</div>
+                                <div class="text-xs mt-1">Rust Binaries</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center text-warm-400">⬇️</div>
+
+                    <div class="flex gap-4">
+                        <button class="diagram-block flex-1 p-4 rounded-lg bg-warm-100 border border-warm-200 text-center hover:bg-warm-200" onclick="showArchDetail('output', this)">
+                            <div class="font-bold">⚡ Output</div>
+                            <div class="text-xs mt-1">Cloud Build / PRs</div>
+                        </button>
+                        <button class="diagram-block flex-1 p-4 rounded-lg bg-warm-100 border border-warm-200 text-center hover:bg-warm-200" onclick="showArchDetail('state', this)">
+                            <div class="font-bold">📊 State</div>
+                            <div class="text-xs mt-1">MongoDB Atlas</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Detail Panel -->
+                <div class="lg:col-span-7 bg-warm-50 p-6 rounded-lg border border-warm-200">
+                    <div id="arch-detail-container" class="h-full flex flex-col justify-center">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: CORE AGENT PROFILES & DEMO FLOW -->
+        <section id="agents" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🤖</span> Core Agent Profiles & Live Demo Flow
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Discover the specialized AI agents governing the pipeline. Toggle between the Pre-Merge and Post-Merge agents to understand their distinct roles. Then, click through the interactive 4-step execution strategy used in our executive demonstrations to see how the system operates in real-time.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Agent Profiles (Tabs) -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 border-b pb-2">Autonomous Pipeline Governance</h3>
+
+                    <div class="flex gap-2 mb-6">
+                        <button id="tab-pre" class="px-4 py-2 bg-ibm-blue text-white font-semibold rounded-md text-sm transition-colors shadow" onclick="switchAgentTab('pre')">1. Pre-Merge Coding Agent</button>
+                        <button id="tab-post" class="px-4 py-2 bg-warm-200 text-warm-800 font-semibold rounded-md text-sm hover:bg-warm-300 transition-colors" onclick="switchAgentTab('post')">2. Post-Merge Reliability Agent</button>
+                    </div>
+
+                    <div id="agent-pre" class="bg-white p-6 rounded-xl shadow-sm border border-warm-200 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-100 p-3 rounded-lg text-2xl">📥</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Trigger</h4>
+                                <p class="text-warm-800 text-sm">Pull Request opened on GitLab/GitHub.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-100 p-3 rounded-lg text-2xl">🧠</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Action</h4>
+                                <p class="text-warm-800 text-sm">Fetches Git diff, parses the AST via Rust workers, and checks against enterprise coding standards using Gemini 1.5 Pro's massive context window.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-green-100 p-3 rounded-lg text-2xl">✅</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Output</h4>
+                                <p class="text-warm-800 text-sm font-semibold">Posts actionable, one-click fix suggestions directly in the PR comment thread. Blocks merge if quality gates fail.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="agent-post" class="bg-white p-6 rounded-xl shadow-sm border border-warm-200 space-y-4 hidden">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-red-100 p-3 rounded-lg text-2xl">🚨</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Trigger</h4>
+                                <p class="text-warm-800 text-sm">Post-deployment or Stackdriver anomaly detected.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-red-100 p-3 rounded-lg text-2xl">🔍</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Action</h4>
+                                <p class="text-warm-800 text-sm">Ingests live logs and MongoDB telemetry to perform automated root-cause analysis across microservices.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-yellow-100 p-3 rounded-lg text-2xl">⏪</div>
+                            <div>
+                                <h4 class="font-bold text-ibm-dark uppercase tracking-wider text-xs mb-1">Output</h4>
+                                <p class="text-warm-800 text-sm font-semibold">Automatically triggers Cloud Build rollbacks if DORA/health metrics fall below baseline thresholds.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4-Step Demo Flow -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 border-b pb-2">Live Demo Flow Strategy</h3>
+                    <div class="bg-ibm-dark text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 text-9xl opacity-5">⚙️</div>
+
+                        <div class="flex justify-between mb-8 relative z-10">
+                            <button class="demo-step w-10 h-10 rounded-full bg-ibm-blue font-bold flex items-center justify-center transition-all ring-4 ring-blue-400/30 text-white z-20 relative" onclick="updateDemo(1)">1</button>
+                            <div class="h-1 bg-warm-800 flex-1 mt-4 mx-2"></div>
+                            <button class="demo-step w-10 h-10 rounded-full bg-warm-800 font-bold flex items-center justify-center transition-all hover:bg-warm-700 text-white z-20 relative" onclick="updateDemo(2)">2</button>
+                            <div class="h-1 bg-warm-800 flex-1 mt-4 mx-2"></div>
+                            <button class="demo-step w-10 h-10 rounded-full bg-warm-800 font-bold flex items-center justify-center transition-all hover:bg-warm-700 text-white z-20 relative" onclick="updateDemo(3)">3</button>
+                            <div class="h-1 bg-warm-800 flex-1 mt-4 mx-2"></div>
+                            <button class="demo-step w-10 h-10 rounded-full bg-warm-800 font-bold flex items-center justify-center transition-all hover:bg-warm-700 text-white z-20 relative" onclick="updateDemo(4)">4</button>
+                        </div>
+
+                        <div id="demo-content" class="min-h-[160px] relative z-10">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: EXECUTION ROADMAP -->
+        <section id="roadmap" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🗺️</span> Execution Strategy & Roadmap
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Rapid adaptation via Agile delivery. This interactive timeline details the sequence of Epics required to move from infrastructure provisioning to a high-impact organizational pilot in just 6 weeks.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-warm-200">
+                <div class="grid md:grid-cols-4 gap-4">
+
+                    <div class="border border-warm-200 rounded-lg p-5 relative overflow-hidden group hover:border-ibm-blue transition-colors">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-warm-300 group-hover:bg-ibm-blue transition-colors"></div>
+                        <div class="text-xs font-bold text-ibm-blue uppercase tracking-wider mb-2">Weeks 1-2</div>
+                        <h3 class="font-bold text-lg mb-3">Epic 1: Foundation</h3>
+                        <p class="text-sm text-warm-800">Provision the GCP backbone (Cloud Run, Cloud Build) and the MongoDB Atlas cluster via Terraform/Crossplane. Establish baseline DORA metrics.</p>
+                    </div>
+
+                    <div class="border border-warm-200 rounded-lg p-5 relative overflow-hidden group hover:border-ibm-blue transition-colors">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-warm-300 group-hover:bg-ibm-blue transition-colors"></div>
+                        <div class="text-xs font-bold text-ibm-blue uppercase tracking-wider mb-2">Weeks 3-4</div>
+                        <h3 class="font-bold text-lg mb-3">Epic 2: Orchestration</h3>
+                        <p class="text-sm text-warm-800">Deploy the TypeScript/Bun API Gateway. Implement the vendor-neutral routing abstraction layer mapping to Vertex AI and watsonx endpoints.</p>
+                    </div>
+
+                    <div class="border border-warm-200 rounded-lg p-5 relative overflow-hidden group hover:border-ibm-blue transition-colors">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-warm-300 group-hover:bg-ibm-blue transition-colors"></div>
+                        <div class="text-xs font-bold text-ibm-blue uppercase tracking-wider mb-2">Weeks 4-5</div>
+                        <h3 class="font-bold text-lg mb-3">Epic 3: Worker Dev</h3>
+                        <p class="text-sm text-warm-800">Build out the Rust AST parsers and package the high-speed local developer CLI tooling. Establish webhook connections to GitLab/GitHub.</p>
+                    </div>
+
+                    <div class="border border-ibm-blue bg-blue-50 rounded-lg p-5 relative overflow-hidden shadow-sm">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-ibm-blue"></div>
+                        <div class="text-xs font-bold text-ibm-blue uppercase tracking-wider mb-2">Week 6+</div>
+                        <h3 class="font-bold text-lg mb-3">Epic 4: Pilot & Scale</h3>
+                        <p class="text-sm text-warm-900 font-medium">Launch the automated PR review agent on 2–3 target repositories. Prove ROI, measure pipeline acceleration, and present the executive success report.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-ibm-dark text-white py-8 border-t border-warm-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-warm-400">Information Architected Interactive Presentation. Synthesized from IBM Consulting Source Reports.</p>
+            <p class="text-xs text-warm-500 mt-2">© 2026 IBM. Authorized viewing only.</p>
+        </div>
+    </footer>
+
+    <script>
+        const AppState = {
+            visionMode: 'assisted',
+            impactChartInstance: null,
+            demoStep: 1
+        };
+
+        const ArchitectureData = {
+            'ingestion': {
+                title: 'Event-Driven Ingestion',
+                subtitle: 'Zero Manual Provisioning',
+                content: 'Webhooks from GitLab, GitHub, and Jira trigger the agentic loop instantly. This is the entry point that transforms the pipeline from passive to active.',
+                icon: '📥'
+            },
+            'orchestrator': {
+                title: 'API Gateway & Orchestrator',
+                subtitle: 'TypeScript + Bun on Cloud Run',
+                content: 'Bun\'s native speed, massive concurrency, and seamless TypeScript execution make it the ultimate choice for handling rapid CI/CD webhook ingestions and asynchronous LLM routing. Hosted serverlessly for infinite scale.',
+                icon: '🚦'
+            },
+            'models': {
+                title: 'Vendor-Neutral Routing Layer',
+                subtitle: 'Protecting Platform Investments',
+                content: 'An intelligent abstraction layer dynamically routes reasoning payloads to either Vertex AI (Gemini 1.5 Pro) or IBM watsonx.ai, avoiding vendor lock-in and maximizing existing platform contracts.',
+                icon: '🧠'
+            },
+            'workers': {
+                title: 'High-Performance Workers',
+                subtitle: 'Rust Binaries',
+                content: 'Chosen for unmatched memory safety and zero-cost abstractions. Perfect for heavy AST (Abstract Syntax Tree) parsing, deep repository diff analysis, and building ultra-fast local developer CLIs with GPU offloading.',
+                icon: '⚙️'
+            },
+            'output': {
+                title: 'Actionable Output',
+                subtitle: 'Execution via Cloud Build',
+                content: 'Agents don\'t just alert; they execute. They generate inline code fixes, write missing unit tests, and trigger rollback pipelines directly via Google Cloud Build APIs.',
+                icon: '⚡'
+            },
+            'state': {
+                title: 'State & Telemetry Engine',
+                subtitle: 'MongoDB Atlas on GCP',
+                content: 'The most adaptable NoSQL document store to handle deeply nested, unstructured JSON payloads generated by LLM conversational memory, tool-use reasoning steps, and continuous CI/CD events.',
+                icon: '📊'
+            }
+        };
+
+        const DemoData = {
+            1: {
+                title: "STEP 1: THE TRIGGER",
+                subtitle: "Developer Action",
+                content: "Show a developer submitting a pull request or a Jira ticket being created — the natural on-ramp that kicks off the agentic workflow without any manual intervention.",
+                tags: "GitLab • Jira • Webhook"
+            },
+            2: {
+                title: "STEP 2: THE AGENT ACTION",
+                subtitle: "AI Analysis",
+                content: "Show an agent powered by Vertex AI / watsonx analyzing the code diff for Macy's-specific standards, security vulnerabilities, and test coverage gaps in real time.",
+                tags: "Vertex AI • Gemini 1.5 Pro • Code Review"
+            },
+            3: {
+                title: "STEP 3: THE INTEGRATION",
+                subtitle: "Dev Tool Feedback Loop",
+                content: "Show the agent posting its findings back into the collaboration layer with clear suggested fixes the developer can apply with one click.",
+                tags: "Slack • Teams • GitHub PR Comment"
+            },
+            4: {
+                title: "STEP 4: THE SCALE",
+                subtitle: "Distribution Market Reach",
+                content: "Explain how this architecture scales horizontally across all sectors — enabling enterprise-grade DevOps velocity with consistent quality gates.",
+                tags: "BigQuery • Kubernetes Engine • Cloud Run"
+            }
+        };
+
+        const ChartData = {
+            assisted: {
+                labels: ['Manual Code Review', 'Manual QA/Testing', 'Wait Times', 'Deployment'],
+                data: [45, 30, 20, 5],
+                backgroundColor: ['#d6d3d1', '#e7e5e4', '#f5f5f4', '#0f62fe']
+            },
+            agentic: {
+                labels: ['Agentic Review (Instant)', 'Agentic QA (Automated)', 'Human Approval', 'Deployment'],
+                data: [5, 10, 15, 70],
+                backgroundColor: ['#0f62fe', '#4589ff', '#78a9ff', '#001141']
+            }
+        };
+
+        function toggleVision(mode) {
+            AppState.visionMode = mode;
+            const btnAssisted = document.getElementById('btn-assisted');
+            const btnAgentic = document.getElementById('btn-agentic');
+
+            if (mode === 'assisted') {
+                btnAssisted.className = "flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all bg-white shadow text-ibm-blue";
+                btnAgentic.className = "flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all text-warm-800 hover:text-ibm-dark";
+                document.getElementById('content-assisted').classList.remove('hidden');
+                document.getElementById('content-agentic').classList.add('hidden');
+                document.getElementById('chart-caption').innerText = "Showing: Copilot / Manual Baseline (Time spent)";
+            } else {
+                btnAgentic.className = "flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all bg-white shadow text-ibm-blue";
+                btnAssisted.className = "flex-1 py-2 px-4 rounded-md font-semibold text-sm transition-all text-warm-800 hover:text-ibm-dark";
+                document.getElementById('content-agentic').classList.remove('hidden');
+                document.getElementById('content-assisted').classList.add('hidden');
+                document.getElementById('chart-caption').innerText = "Showing: Agent-Driven Pipeline (Throughput dominance)";
+            }
+            updateChart();
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            AppState.impactChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ChartData.assisted.labels,
+                    datasets: [{
+                        data: ChartData.assisted.data,
+                        backgroundColor: ChartData.assisted.backgroundColor,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { family: "'IBM Plex Sans', sans-serif" },
+                                color: '#44403c'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label.length > 16) label = label.substring(0, 16) + '...';
+                                    return label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        function updateChart() {
+            const data = AppState.visionMode === 'assisted' ? ChartData.assisted : ChartData.agentic;
+            AppState.impactChartInstance.data.labels = data.labels;
+            AppState.impactChartInstance.data.datasets[0].data = data.data;
+            AppState.impactChartInstance.data.datasets[0].backgroundColor = data.backgroundColor;
+            AppState.impactChartInstance.update();
+        }
+
+        function showArchDetail(key, element) {
+            document.querySelectorAll('.diagram-block').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+            const data = ArchitectureData[key];
+            const container = document.getElementById('arch-detail-container');
+            container.style.opacity = '0';
+
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="text-4xl mb-4">${data.icon}</div>
+                    <h4 class="text-2xl font-bold text-ibm-dark mb-1">${data.title}</h4>
+                    <p class="text-sm font-semibold text-ibm-blue uppercase tracking-wider mb-4 border-b border-warm-200 pb-2 inline-block">${data.subtitle}</p>
+                    <p class="text-warm-800 leading-relaxed text-lg">${data.content}</p>
+                `;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 150);
+        }
+
+        function switchAgentTab(tab) {
+            const btnPre = document.getElementById('tab-pre');
+            const btnPost = document.getElementById('tab-post');
+            const contentPre = document.getElementById('agent-pre');
+            const contentPost = document.getElementById('agent-post');
+
+            if (tab === 'pre') {
+                btnPre.className = "px-4 py-2 bg-ibm-blue text-white font-semibold rounded-md text-sm transition-colors shadow";
+                btnPost.className = "px-4 py-2 bg-warm-200 text-warm-800 font-semibold rounded-md text-sm hover:bg-warm-300 transition-colors";
+                contentPre.classList.remove('hidden');
+                contentPost.classList.add('hidden');
+            } else {
+                btnPost.className = "px-4 py-2 bg-ibm-blue text-white font-semibold rounded-md text-sm transition-colors shadow";
+                btnPre.className = "px-4 py-2 bg-warm-200 text-warm-800 font-semibold rounded-md text-sm hover:bg-warm-300 transition-colors";
+                contentPost.classList.remove('hidden');
+                contentPre.classList.add('hidden');
+            }
+        }
+
+        function updateDemo(stepIndex) {
+            AppState.demoStep = stepIndex;
+            const buttons = document.querySelectorAll('.demo-step');
+            buttons.forEach((btn, idx) => {
+                if (idx < stepIndex) {
+                    btn.className = "demo-step w-10 h-10 rounded-full bg-ibm-blue font-bold flex items-center justify-center transition-all ring-4 ring-blue-400/30 text-white z-20 relative";
+                } else {
+                    btn.className = "demo-step w-10 h-10 rounded-full bg-warm-800 font-bold flex items-center justify-center transition-all hover:bg-warm-700 text-white z-20 relative";
+                }
+            });
+
+            const data = DemoData[stepIndex];
+            const contentDiv = document.getElementById('demo-content');
+            contentDiv.style.opacity = '0';
+            setTimeout(() => {
+                contentDiv.innerHTML = `
+                    <h4 class="text-ibm-blue font-bold tracking-wide text-xs mb-1">${data.title}</h4>
+                    <h3 class="text-2xl font-bold mb-3">${data.subtitle}</h3>
+                    <p class="text-warm-200 mb-6 text-sm">${data.content}</p>
+                    <span class="inline-block bg-warm-800/50 text-warm-300 text-xs px-3 py-1 rounded-full font-mono border border-warm-700">${data.tags}</span>
+                `;
+                contentDiv.style.opacity = '1';
+                contentDiv.style.transition = 'opacity 0.2s ease-in';
+            }, 150);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initChart();
+            showArchDetail('ingestion', document.querySelector('.diagram-block'));
+            updateDemo(1);
+        });
+    </script>
+</body>
+</html>
