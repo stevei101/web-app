@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic AI for Warehouse Onboarding - IBM Consulting</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Configuration & Custom Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ibm: {
+                            blue: '#0f62fe',
+                            dark: '#161616',
+                            gray: '#f4f4f4',
+                            light: '#ffffff'
+                        },
+                        redhat: {
+                            red: '#EE0000'
+                        },
+                        warm: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#44403c',
+                            900: '#292524'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9; /* Warm neutral 50 */
+            color: #292524; /* Warm neutral 900 */
+        }
+
+        /* Required Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+
+        /* Interactive Block Transitions */
+        .agent-block {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .agent-block.active {
+            border-color: #0f62fe;
+            background-color: #f0f4ff; /* very light blue */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(15, 98, 254, 0.1);
+        }
+        .agent-block:hover:not(.active) {
+            border-color: #a8a29e;
+            background-color: #ffffff;
+        }
+
+        /* Custom scrollbar for interactive lists */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f5f5f4;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-ibm-blue selection:text-white">
+
+    <!-- Chosen Palette: Warm Neutrals with IBM Blue as the primary accent, and subtle Red Hat Red for specific technology callouts. Background: #fafaf9, Text: #292524. Chosen to reflect the "One IBM" strategy bridging IBM Consulting and Red Hat technologies. -->
+
+    <!-- Application Structure Plan:
+         1. Dashboard Layout: Designed to flow from the business problem (Enterprise Growth/Acquisitions) down to the technical solution (Agentic Onboarding Factory) and finally the ROI (Timeline & FinOps).
+         2. Sticky Navigation: For quick executive access.
+         3. Section 1 (The Challenge): Sets the stage with the 22-week reality and the need for a VMware-to-AI pivot.
+         4. Section 2 (The Agentic Factory): Interactive grid of specialized agents. Clicking an agent reveals how it accelerates Blue Yonder onboarding using specific IBM/Red Hat tech (watsonx, OpenShift Virt, Ansible).
+         5. Section 3 (Timeline Impact): A horizontal stacked bar chart to vividly contrast the 22-week traditional timeline against the 3.5-week agentic timeline.
+         6. Section 4 (Strategic Value & FinOps): Outlines how Turbonomic savings fund the initiative, creating a self-funding modernization play.
+         Reasoning: This structure synthesizes the GXO Blue Yonder deployment challenge with the IBM Tech/Red Hat partnership backdrop, turning a slide deck into a compelling, interactive business case.
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Goal: Inform/Organize Workflow -> Viz: Interactive CSS Grid of Agent Cards -> Interaction: Click cards to reveal technical implementation details in a side/bottom panel -> Justification: Breaks down the complex SDLC into specialized agent roles (Infra, Network, BY Config, etc.) and maps them to IBM/RH products without clutter. (NO SVG).
+         2. Goal: Compare Timelines -> Viz: Horizontal Stacked Bar Chart (Chart.js) -> Interaction: Hover for exact weeks saved per phase -> Justification: A horizontal stacked bar is the most striking way to visualize a 22-week duration shrinking to ~3.5 weeks, phase by phase. (NO SVG).
+         3. Goal: Inform Strategy -> Viz: Structured Text & KPI Blocks -> Interaction: Hover states on strategic pillars -> Justification: Clearly articulates the FinOps and "One IBM" value proposition. (NO SVG).
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-warm-50/90 backdrop-blur-md z-50 border-b border-warm-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🌐</span>
+                    <span class="font-bold text-xl tracking-tight text-ibm-dark">IBM Consulting</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#challenge" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">The Challenge</a>
+                    <a href="#factory" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Agentic Factory</a>
+                    <a href="#impact" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Timeline Impact</a>
+                    <a href="#strategy" class="text-sm font-semibold text-warm-800 hover:text-ibm-blue transition-colors">Strategic Value</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-4xl">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-ibm-dark text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">Logistics & Delivery</span>
+                <span class="bg-blue-100 text-ibm-blue text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border border-blue-200">Blue Yonder Modernization</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-ibm-dark mb-6 leading-tight">Agentic AI for New Customer & Warehouse Onboarding</h1>
+            <p class="text-2xl text-warm-800 mb-8 font-light">Accelerating Blue Yonder Deployments through Autonomous SDLC</p>
+            <p class="text-lg text-warm-800 mb-8 border-l-4 border-ibm-blue pl-4">
+                Enterprise growth via acquisitions requires rapid warehouse onboarding. Currently, configuring Blue Yonder, standing up infrastructure, and integrating legacy SAP/Oracle systems takes ~22 weeks. By deploying specialized Agentic AI on Google Cloud and Red Hat OpenShift, we reduce this to 3–4 weeks.
+            </p>
+            <div class="flex gap-4">
+                <a href="#impact" class="bg-ibm-blue text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors shadow-lg">View the 22-Week Reduction</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24">
+
+        <!-- SECTION 1: THE CHALLENGE -->
+        <section id="challenge" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">⚠️</span> The Enterprise Growth Challenge
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    As operations expand, the legacy onboarding process becomes a critical bottleneck. Existing customers sit on custom WMS solutions across fragmented GCVE and on-premise VMware environments. Every new warehouse requires highly manual configuration.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">🏭</div>
+                    <h3 class="font-bold text-lg mb-2">Manual Provisioning</h3>
+                    <p class="text-sm text-warm-800">Infrastructure and network connectivity setup for each new warehouse takes over 6 weeks of manual ticketing and firewall configuration.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">🧩</div>
+                    <h3 class="font-bold text-lg mb-2">Complex Integrations</h3>
+                    <p class="text-sm text-warm-800">Tying new Blue Yonder instances back to enterprise Oracle eBusiness Suite and SAP requires 6+ weeks of bespoke API development.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">⏳</div>
+                    <h3 class="font-bold text-lg mb-2">The 22-Week Reality</h3>
+                    <p class="text-sm text-warm-800">From request to production readiness, the current timeline stalls time-to-revenue and consumes massive operational overhead.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE AGENTIC FACTORY -->
+        <section id="factory" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">⚙️</span> The Agentic Onboarding Factory
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Agentic AI shifts the paradigm from human-driven tasks to autonomous, specialized agents collaborating with engineers. Click on each agent role below to see how it accelerates the Blue Yonder onboarding workflow using the "One IBM" technology stack.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+
+                <!-- Interactive Agent Grid -->
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200 active" onclick="showAgentDetail('infra', this)">
+                        <div class="text-2xl mb-2">🏗️</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Infrastructure Agent</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">3 weeks → Hours</div>
+                    </div>
+
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showAgentDetail('network', this)">
+                        <div class="text-2xl mb-2">🌐</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Network Agent</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">3 weeks → 1-2 days</div>
+                    </div>
+
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showAgentDetail('config', this)">
+                        <div class="text-2xl mb-2">📦</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Blue Yonder Config</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">4 weeks → 3-5 days</div>
+                    </div>
+
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showAgentDetail('integration', this)">
+                        <div class="text-2xl mb-2">🔗</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Integration Agent</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">6 weeks → 1-2 weeks</div>
+                    </div>
+
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showAgentDetail('testing', this)">
+                        <div class="text-2xl mb-2">🧪</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Testing Agent</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">4 weeks → 1 week</div>
+                    </div>
+
+                    <div class="agent-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showAgentDetail('prod', this)">
+                        <div class="text-2xl mb-2">🚀</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Readiness & DevOps</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">2 weeks → 2 days</div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Detail Panel -->
+                <div class="lg:col-span-7 bg-white p-8 rounded-xl border border-warm-200 shadow-sm flex flex-col justify-center min-h-[350px]">
+                    <div id="agent-detail-container" class="space-y-6">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: TIMELINE IMPACT -->
+        <section id="impact" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">📉</span> Timeline Transformation
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Parallel automation via Agentic SDLC dramatically accelerates delivery. See the compounding effect of replacing manual hand-offs with autonomous agents.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-warm-200">
+                <h3 class="text-xl font-semibold mb-2">Warehouse Onboarding Duration (Weeks)</h3>
+                <p class="text-sm text-warm-800 mb-8 border-l-4 border-ibm-blue pl-3">Traditional ~22 Weeks vs. Agentic ~3.5 Weeks</p>
+
+                <div class="chart-container">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STRATEGIC VALUE & FINOPS -->
+        <section id="strategy" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🎯</span> Strategic Value & The "One IBM" Pivot
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    This is more than just speed. It is a strategic pivot to modernize legacy infrastructure, secure the edge, and create a self-funding automation factory.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- FinOps Block -->
+                <div class="bg-ibm-dark text-white p-8 rounded-xl shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl opacity-10">💰</div>
+                    <h3 class="text-xl font-bold mb-4 text-blue-300 uppercase tracking-wide text-sm">The Self-Funding Model</h3>
+                    <h4 class="text-3xl font-bold mb-4">FinOps Justification</h4>
+                    <p class="text-warm-300 mb-6 font-light leading-relaxed">
+                        By implementing <span class="font-semibold text-white">IBM Turbonomic</span>, we provide real-time visibility and AI-driven resourcing across existing GCP and GCVE environments.
+                    </p>
+                    <div class="bg-white/10 p-4 rounded-lg border border-white/20">
+                        <div class="text-2xl font-bold text-blue-400 mb-1">25% – 40%</div>
+                        <div class="text-sm text-warm-200">Reduction in cloud waste, effectively funding the Agentic AI implementation and Blue Yonder deployment.</div>
+                    </div>
+                </div>
+
+                <!-- Strategic Pillars -->
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-lg border border-warm-200 hover:border-ibm-blue transition-colors group">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-redhat-red"></span> The VMware-to-AI Pivot
+                        </h4>
+                        <p class="text-sm text-warm-800">Targeting legacy on-premise and GCVE environments. We deploy <strong class="text-ibm-dark">Red Hat OpenShift Virtualization</strong> to rehost VMs, modernizing infrastructure and freeing up capital for AI supply chain roadmaps.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg border border-warm-200 hover:border-ibm-blue transition-colors group">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-ibm-blue"></span> Hybrid Control Plane
+                        </h4>
+                        <p class="text-sm text-warm-800">Resolving fragmented tooling (Jenkins, limited Terraform). We introduce the "One IBM" Control Plane: <strong class="text-ibm-dark">Terraform</strong> for build, <strong class="text-ibm-dark">HashiCorp Vault</strong> for edge security, and <strong class="text-ibm-dark">Ansible</strong> for automation standardization.</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg border border-warm-200 hover:border-ibm-blue transition-colors group">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Reusable Onboarding Factory
+                        </h4>
+                        <p class="text-sm text-warm-800">Agentic SDLC creates a standardized factory model. New warehouses and acquisitions can be launched rapidly, turning IT from a bottleneck into an enabler of enterprise growth.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-ibm-dark text-white py-8 border-t border-warm-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-warm-400">Information Architected Interactive Presentation. Synthesized from IBM Consulting & Red Hat Partnership Strategy.</p>
+            <p class="text-xs text-warm-500 mt-2">© 2026 IBM. Authorized viewing only.</p>
+        </div>
+    </footer>
+
+    <!-- Application Logic & Data -->
+    <script>
+        // --- Data Storage ---
+        const AgentData = {
+            'infra': {
+                icon: '🏗️',
+                title: 'Infrastructure Automation Agent',
+                impact: '3 weeks → Hours',
+                description: 'Creates environments autonomously via Infrastructure-as-Code. Provisions compute, storage, and monitoring without manual ticketing.',
+                tech: [
+                    { name: 'Red Hat OpenShift Virtualization', desc: 'Replaces legacy GCVE/VMware to host modernized container and VM workloads.' },
+                    { name: 'Terraform', desc: 'Standardizes the build process across the hybrid cloud.' }
+                ]
+            },
+            'network': {
+                icon: '🌐',
+                title: 'Network Automation Agent',
+                impact: '3 weeks → 1-2 days',
+                description: 'Configures connectivity, sets up VPNs, creates firewall rules, and runs automated connectivity validation tests across hybrid environments.',
+                tech: [
+                    { name: 'Red Hat Ansible', desc: 'Automates network device configuration and standardizes yard/hub systems.' },
+                    { name: 'HashiCorp Vault', desc: 'Secures Zero-Trust communications and encrypts data at the retail edge.' }
+                ]
+            },
+            'config': {
+                icon: '📦',
+                title: 'Application Configuration Agent',
+                impact: '4 weeks → 3-5 days',
+                description: 'Generates Blue Yonder templates. Automatically configures warehouse zones, bin structures, and picking/shipping rules based on natural language requirements.',
+                tech: [
+                    { name: 'watsonx Code Assistant', desc: 'Translates warehouse blueprints into structured configuration scripts.' }
+                ]
+            },
+            'integration': {
+                icon: '🔗',
+                title: 'Integration Automation Agent',
+                impact: '6 weeks → 1-2 weeks',
+                description: 'Generates APIs and data pipelines bridging the new WMS to legacy enterprise systems (ERP → BY orders, shipment confirmations, inventory feeds).',
+                tech: [
+                    { name: 'watsonx Orchestrate', desc: 'Acts as the orchestration layer, deploying agents to connect SAP, Oracle eBusiness Suite, and Blue Yonder.' }
+                ]
+            },
+            'testing': {
+                icon: '🧪',
+                title: 'Automated Testing Agent',
+                impact: '4 weeks → 1 week',
+                description: 'Simulates high-volume warehouse operations. Autonomous agents test order processing, picking workflows, inventory allocation, and extreme edge cases.',
+                tech: [
+                    { name: 'Google Vertex AI', desc: 'Analyzes test outcomes and generates synthetic data for edge-case simulations.' }
+                ]
+            },
+            'prod': {
+                icon: '🚀',
+                title: 'Production Readiness & Monitoring Agent',
+                impact: '2 weeks → 2 days',
+                description: 'Verifies system health, integration validation, security checks, and performance testing prior to go-live.',
+                tech: [
+                    { name: 'IBM Instana', desc: 'Provides 1-second granularity observability to prevent integration bottlenecks.' },
+                    { name: 'IBM Turbonomic', desc: 'Ensures optimal AI-driven resourcing to prevent cloud waste.' }
+                ]
+            }
+        };
+
+        // --- Core Interaction Handling ---
+
+        function showAgentDetail(key, element) {
+            // UI Update: Active state
+            document.querySelectorAll('.agent-block').forEach(el => {
+                el.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            const data = AgentData[key];
+            const container = document.getElementById('agent-detail-container');
+
+            // Fade effect transition
+            container.style.opacity = '0';
+
+            setTimeout(() => {
+                // Build Tech Stack HTML
+                let techHtml = '';
+                data.tech.forEach(t => {
+                    // Highlight Red Hat or IBM dynamically based on name
+                    let badgeClass = 'bg-gray-200 text-gray-800';
+                    if(t.name.includes('Red Hat')) badgeClass = 'bg-red-50 text-redhat-red border border-red-200';
+                    if(t.name.includes('IBM') || t.name.includes('watsonx') || t.name.includes('Instana') || t.name.includes('Turbonomic')) badgeClass = 'bg-blue-50 text-ibm-blue border border-blue-200';
+
+                    techHtml += `
+                        <div class="mb-3">
+                            <span class="inline-block px-2 py-1 rounded text-xs font-bold mb-1 ${badgeClass}">${t.name}</span>
+                            <p class="text-sm text-warm-800">${t.desc}</p>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="flex items-center gap-4 border-b border-warm-200 pb-4">
+                        <div class="text-5xl bg-warm-100 p-3 rounded-lg">${data.icon}</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-ibm-dark">${data.title}</h3>
+                            <span class="inline-block mt-1 bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-green-200">Impact: ${data.impact}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-2">Agent Function</h4>
+                        <p class="text-lg text-warm-900 leading-relaxed">${data.description}</p>
+                    </div>
+
+                    <div class="bg-warm-50 p-5 rounded-lg border border-warm-200 mt-4">
+                        <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-3">One IBM Tech Stack</h4>
+                        ${techHtml}
+                    </div>
+                `;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 150);
+        }
+
+        // Initialize Chart.js
+        function initTimelineChart() {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+
+            // Data representations in weeks
+            const labels = [
+                'Infrastructure Setup',
+                'Network Readiness',
+                'Blue Yonder Config',
+                'Integration Dev',
+                'Testing Validation',
+                'Prod Readiness'
+            ];
+
+            const traditionalData = [3, 3, 4, 6, 4, 2];
+            // Agentic times converted roughly to fractions of a week for scale
+            const agenticData = [0.1, 0.3, 0.7, 1.5, 1.0, 0.3];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Traditional Onboarding (22 Weeks Total)',
+                            data: traditionalData,
+                            backgroundColor: '#d6d3d1', // Neutral gray
+                            borderColor: '#a8a29e',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Agentic Onboarding (~3.5 Weeks Total)',
+                            data: agenticData,
+                            backgroundColor: '#0f62fe', // IBM Blue
+                            borderColor: '#0043ce',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal bar chart
+                    responsive: true,
+                    maintainAspectRatio: false, // CRITICAL for chart-container
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: "'IBM Plex Sans', sans-serif", weight: 'bold' },
+                                color: '#292524'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let val = context.parsed.x;
+                                    let unit = "Weeks";
+                                    // Make tooltip friendly for small values
+                                    if(context.datasetIndex === 1) { // Agentic
+                                        if(val === 0.1) return "Hours";
+                                        if(val === 0.3) return "1-2 Days";
+                                        if(val === 0.7) return "3-5 Days";
+                                        if(val === 1.5) return "1-2 Weeks";
+                                        if(val === 1.0) return "1 Week";
+                                    }
+                                    return context.dataset.label.split(' ')[0] + ': ' + val + ' ' + unit;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true, // Stacked to show total accumulative visual weight
+                            title: {
+                                display: true,
+                                text: 'Duration (Weeks)',
+                                font: { weight: 'bold' }
+                            },
+                            grid: { color: '#e7e5e4' }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initTimelineChart();
+            // Initialize detail panel with first item
+            showAgentDetail('infra', document.querySelector('.agent-block'));
+        });
+
+    </script>
+</body>
+</html>
