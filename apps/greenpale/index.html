@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Hat Enterprise Modernization Plays</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"IBM Plex Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ibm: {
+                            blue: '#0f62fe',
+                            dark: '#161616',
+                            gray: '#f4f4f4',
+                            light: '#ffffff'
+                        },
+                        redhat: {
+                            red: '#EE0000',
+                            dark: '#CC0000',
+                            light: '#FFF0F0'
+                        },
+                        warm: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            800: '#44403c',
+                            900: '#292524'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+            color: #292524;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+
+        .play-block {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .play-block.active {
+            border-color: #EE0000;
+            background-color: #FFF0F0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(238, 0, 0, 0.1);
+        }
+        .play-block:hover:not(.active) {
+            border-color: #a8a29e;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-redhat-red selection:text-white">
+
+    <nav class="fixed w-full bg-warm-50/90 backdrop-blur-md z-50 border-b border-warm-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🔴</span>
+                    <span class="font-bold text-xl tracking-tight text-ibm-dark">Red Hat Partner GTM</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#market" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">Market Drivers</a>
+                    <a href="#plays" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">Sales Plays</a>
+                    <a href="#impact" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">TCO Impact</a>
+                    <a href="#enablement" class="text-sm font-semibold text-warm-800 hover:text-redhat-red transition-colors">Partner Enablement</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-4xl">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-ibm-dark text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">2026 GTM Strategy</span>
+                <span class="bg-redhat-light text-redhat-red text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border border-red-200">Enterprise Modernization</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-ibm-dark mb-6 leading-tight">Red Hat Sales Plays & Partner Acceleration</h1>
+            <p class="text-2xl text-warm-800 mb-8 font-light">Capitalizing on Infrastructure Disruption & AI Adoption</p>
+            <p class="text-lg text-warm-800 mb-8 border-l-4 border-redhat-red pl-4">
+                The enterprise landscape is facing massive shifts: disruptive hypervisor licensing changes, the urgent mandate for sovereign GenAI, and the need for automation at scale. These consolidated sales plays position partners to lead infrastructure modernization and AI enablement.
+            </p>
+            <div class="flex gap-4">
+                <a href="#plays" class="bg-redhat-red text-white px-6 py-3 rounded-md font-semibold hover:bg-redhat-dark transition-colors shadow-lg">Explore the Plays</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24">
+
+        <!-- SECTION 1: MARKET CATALYSTS -->
+        <section id="market" class="scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🌪️</span> Key Market Catalysts
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Our 2026 sales plays are directly aligned with the most pressing challenges IT leaders face today, creating immediate, high-value pipeline opportunities.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">💸</div>
+                    <h3 class="font-bold text-lg mb-2">The Virtualization Tax</h3>
+                    <p class="text-sm text-warm-800">Broadcom's acquisition of VMware has triggered enterprise-wide audits. Clients are facing 100% to 1000%+ renewal increases, seeking urgent alternatives to reduce vendor lock-in.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h3 class="font-bold text-lg mb-2">Shadow AI & Privacy</h3>
+                    <p class="text-sm text-warm-800">Organizations want to deploy LLMs but are terrified of data leakage in public clouds. They need platforms that allow model training and inference securely on-premises or at the edge.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-warm-200 shadow-sm">
+                    <div class="text-3xl mb-4">⚙️</div>
+                    <h3 class="font-bold text-lg mb-2">Operational Complexity</h3>
+                    <p class="text-sm text-warm-800">Disparate environments and fragmented tooling create immense toil. Automation is no longer optional; it is required to manage hybrid cloud scale and bridge the IT skills gap.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SALES PLAYS -->
+        <section id="plays" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🎯</span> The Core Sales Plays
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Select a play below to view the market hook, strategic value, and corresponding technology focus area for your client conversations.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+
+                <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200 active" onclick="showPlayDetail('osvirt', this)">
+                        <div class="text-2xl mb-2">🖥️</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">OpenShift Virt</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">The VMware Pivot</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('osai', this)">
+                        <div class="text-2xl mb-2">🧠</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">OpenShift AI</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">Hybrid Cloud AI</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('aap', this)">
+                        <div class="text-2xl mb-2">🤖</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Ansible Automation</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">Enterprise Scale</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200" onclick="showPlayDetail('lightspeed', this)">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">RH Lightspeed</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">GenAI for IT Ops</div>
+                    </div>
+
+                    <div class="play-block bg-white p-4 rounded-lg border-2 border-warm-200 sm:col-span-2" onclick="showPlayDetail('rhel', this)">
+                        <div class="text-2xl mb-2">🐧</div>
+                        <h4 class="font-bold text-sm text-ibm-dark">Red Hat Enterprise Linux</h4>
+                        <div class="text-xs text-warm-800 mt-1 font-semibold uppercase">The Standardized Foundation</div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 bg-white p-8 rounded-xl border border-warm-200 shadow-sm flex flex-col justify-center min-h-[350px]">
+                    <div id="play-detail-container" class="space-y-6"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: TCO IMPACT -->
+        <section id="impact" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">📊</span> Business Value: 3-Year TCO Comparison
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    This visualization illustrates the compelling financial argument for migrating from a legacy hypervisor and manual operational model to a modernized Red Hat platform.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-warm-200">
+                <h3 class="text-xl font-semibold mb-2">Projected 3-Year TCO (Relative Scale)</h3>
+                <p class="text-sm text-warm-800 mb-8 border-l-4 border-redhat-red pl-3">Status Quo (Legacy Virtualization) vs. Red Hat Platform (OpenShift Virt + Ansible)</p>
+
+                <div class="chart-container">
+                    <canvas id="tcoChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PARTNER ENABLEMENT -->
+        <section id="enablement" class="scroll-mt-24">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🎓</span> Partner Readiness & Upcoming Events
+                </h2>
+                <p class="text-lg text-warm-800 max-w-4xl">
+                    Equip your teams with the latest technical and GTM knowledge. Leverage our BrightTALK webinar series and upcoming global events to accelerate your pipeline.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-ibm-dark text-white p-8 rounded-xl shadow-lg relative overflow-hidden border border-redhat-dark">
+                    <div class="absolute -right-4 -top-4 text-8xl opacity-10">🌍</div>
+                    <span class="bg-redhat-red text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-4 inline-block">Flagship Event</span>
+                    <h3 class="text-3xl font-bold mb-2">Red Hat Summit 2026</h3>
+                    <h4 class="text-lg text-redhat-light mb-4">May 11-14 | Georgia World Congress Center</h4>
+                    <p class="text-warm-300 mb-6 font-light leading-relaxed">
+                        Join us to uncover opportunities for your business, your customers, and yourself. Deep dive into OpenShift, AI, and Automation with industry leaders.
+                    </p>
+                    <a href="#" class="inline-block border border-white hover:bg-white hover:text-ibm-dark transition-colors px-4 py-2 rounded font-semibold">Register Now</a>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-ibm-dark border-b border-warm-200 pb-2">Latest Partner Webinars</h3>
+
+                    <div class="bg-white p-4 rounded-lg border border-warm-200 hover:border-redhat-red transition-colors group">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-md text-ibm-dark">Partner Pulse: Elevate Your 2026 GTM</h4>
+                            <span class="bg-warm-200 text-warm-800 text-[10px] font-bold px-2 py-1 rounded uppercase">On-Demand</span>
+                        </div>
+                        <p class="text-sm text-warm-800 mb-2">Kick off the year with a clear roadmap for success and actionable marketing strategies.</p>
+                        <p class="text-xs text-warm-500 font-semibold">Duration: 33 mins | Presenters: Kim Lasseter, Jerome Nivet</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg border border-warm-200 hover:border-redhat-red transition-colors group">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-md text-ibm-dark">OpenShift Virt Day-2 Operations</h4>
+                            <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-1 rounded uppercase">Upcoming: Mar 19</span>
+                        </div>
+                        <p class="text-sm text-warm-800 mb-2">Deep dive into Optimization, Descheduling & Live Migration Tuning.</p>
+                        <p class="text-xs text-warm-500 font-semibold">Presenters: Mohit Vardhani, Ashish Sharma</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg border border-warm-200 hover:border-redhat-red transition-colors group">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-md text-ibm-dark">Secrets Management with AAP & Vault</h4>
+                            <span class="bg-warm-200 text-warm-800 text-[10px] font-bold px-2 py-1 rounded uppercase">On-Demand</span>
+                        </div>
+                        <p class="text-sm text-warm-800 mb-2">Explore the integration and automation between Ansible Automation Platform and HashiCorp Vault.</p>
+                        <p class="text-xs text-warm-500 font-semibold">Duration: 39 mins | Presenter: Matthew Packer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-ibm-dark text-white py-8 border-t border-redhat-dark mt-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <p class="text-sm text-warm-400">Information Architected Interactive Partner Presentation.</p>
+                <p class="text-xs text-warm-500 mt-1">© 2026 Red Hat. Synthesized for Partner Enablement.</p>
+            </div>
+            <div class="mt-4 md:mt-0 space-x-4 text-sm text-warm-400">
+                <a href="#" class="hover:text-white transition">Partner Connect</a>
+                <a href="#" class="hover:text-white transition">Red Hat Ecosystem Catalog</a>
+                <a href="#" class="hover:text-white transition">Training Portal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const PlayData = {
+            'osvirt': {
+                icon: '🖥️',
+                title: 'OpenShift Virtualization',
+                tag: 'The VMware/Broadcom Replacement Play',
+                description: 'Allows organizations to run traditional Virtual Machines (VMs) alongside modern containerized workloads on a single, unified Kubernetes platform.',
+                value: 'Consolidates infrastructure silos, optimizes compute resources, and significantly lowers TCO, helping clients escape severe legacy licensing hikes.',
+                resources: [
+                    { name: 'Webinar', desc: 'Marketing Red Hat OpenShift Virtualization (24 mins)' },
+                    { name: 'Technical', desc: 'Day-2 Operations: Optimization & Live Migration Tuning (Mar 19)' }
+                ]
+            },
+            'osai': {
+                icon: '🧠',
+                title: 'OpenShift AI',
+                tag: 'On-Premises & Hybrid Cloud Play',
+                description: 'A unified AI/ML platform that provides a consistent environment to build, train, fine-tune, and serve models anywhere—keeping proprietary data behind the corporate firewall.',
+                value: 'Unblocks GenAI adoption for risk-averse enterprises. Provides predictable inference costs compared to public cloud lock-in.',
+                resources: [
+                    { name: 'Webinar', desc: 'Beyond the Sandbox: Orchestrating High-Performance LLM Inference (41 mins)' },
+                    { name: 'Event', desc: 'Model-as-a-Service with Red Hat AI: Scalable & Cost-efficient (Mar 11)' }
+                ]
+            },
+            'aap': {
+                icon: '🤖',
+                title: 'Red Hat Ansible Automation',
+                tag: 'Enterprise Automation at Scale',
+                description: 'An enterprise-grade platform for scaling IT automation across hybrid clouds, networking, security, and edge devices. Acts as the connective tissue for IT ops.',
+                value: 'Reduces operational toil, bridges IT skill shortages, and pairs exceptionally well with tools like Terraform and HashiCorp Vault for complete lifecycle management.',
+                resources: [
+                    { name: 'Webinar', desc: 'Operationalizing secrets management with AAP & HashiCorp Vault (39 mins)' },
+                    { name: 'Webinar', desc: 'Automating Network Policies with AAP and Palo Alto Networks (59 mins)' }
+                ]
+            },
+            'lightspeed': {
+                icon: '⚡',
+                title: 'Red Hat Lightspeed',
+                tag: 'AI-Driven IT Operations',
+                description: 'Generative AI integrated directly into Red Hat products. Uses purpose-built LLMs to translate natural language prompts into syntactically correct Ansible Playbooks.',
+                value: 'Democratizes automation, allowing less experienced staff to build reliable code quickly, while freeing senior engineers from routine troubleshooting.',
+                resources: [
+                    { name: 'Integration', desc: 'Features integration with IBM watsonx Code Assistant' },
+                    { name: 'Webinar', desc: 'From Code to Catalog: Accelerating the Automation Developer Journey (Mar 12)' }
+                ]
+            },
+            'rhel': {
+                icon: '🐧',
+                title: 'Red Hat Enterprise Linux',
+                tag: 'The Essential Foundation',
+                description: 'The industry standard for a secure, hardened, and consistent operating system across physical, virtual, private, and public cloud environments.',
+                value: 'Standardizing on RHEL simplifies life-cycle management, ensures continuous compliance, and provides the baseline telemetry needed for proactive maintenance.',
+                resources: [
+                    { name: 'Webinar', desc: 'RHEL: Unlocking the Partner Profitability Engine (Mar 17)' },
+                    { name: 'Event', desc: 'RHEL 10 Workshop - Petaling Jaya (Mar 10)' }
+                ]
+            }
+        };
+
+        function showPlayDetail(key, element) {
+            document.querySelectorAll('.play-block').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+            const data = PlayData[key];
+            const container = document.getElementById('play-detail-container');
+            container.style.opacity = '0';
+
+            setTimeout(() => {
+                let resHtml = '';
+                data.resources.forEach(r => {
+                    let badgeClass = 'bg-gray-200 text-gray-800';
+                    if(r.name === 'Webinar') badgeClass = 'bg-blue-100 text-blue-800 border border-blue-200';
+                    if(r.name === 'Event') badgeClass = 'bg-green-100 text-green-800 border border-green-200';
+                    if(r.name === 'Technical' || r.name === 'Integration') badgeClass = 'bg-purple-100 text-purple-800 border border-purple-200';
+
+                    resHtml += `
+                        <div class="mb-3 flex items-start gap-3">
+                            <span class="inline-block px-2 py-1 rounded text-[10px] font-bold mt-0.5 ${badgeClass} uppercase tracking-wider shrink-0">${r.name}</span>
+                            <p class="text-sm text-warm-800">${r.desc}</p>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="flex items-center gap-4 border-b border-warm-200 pb-4">
+                        <div class="text-5xl bg-redhat-light p-3 rounded-lg">${data.icon}</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-ibm-dark">${data.title}</h3>
+                            <span class="inline-block mt-1 bg-redhat-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">${data.tag}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mt-4">
+                        <div>
+                            <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-2">The Solution</h4>
+                            <p class="text-md text-warm-900 leading-relaxed">${data.description}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-2">Strategic Value</h4>
+                            <p class="text-md text-warm-900 leading-relaxed border-l-2 border-redhat-red pl-3">${data.value}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-warm-50 p-5 rounded-lg border border-warm-200 mt-6">
+                        <h4 class="text-sm font-bold text-warm-500 uppercase tracking-wider mb-3">Enablement & Content Focus</h4>
+                        ${resHtml}
+                    </div>
+                `;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 150);
+        }
+
+        function initTCOChart() {
+            const ctx = document.getElementById('tcoChart').getContext('2d');
+
+            const labels = [
+                'Licensing & Software',
+                'Hardware / Infrastructure',
+                'Operational Labor & Maintenance',
+                'Cost of Downtime/Security Events'
+            ];
+
+            const legacyData = [45, 30, 40, 15];
+            const redhatData = [15, 20, 18, 5];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Status Quo (Legacy Virtualization / Manual Ops)',
+                            data: legacyData,
+                            backgroundColor: '#d6d3d1',
+                            borderColor: '#a8a29e',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Red Hat Platform (OS Virt + Ansible + RHEL)',
+                            data: redhatData,
+                            backgroundColor: '#EE0000',
+                            borderColor: '#CC0000',
+                            borderWidth: 1,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { family: "'IBM Plex Sans', sans-serif", weight: 'bold' },
+                                color: '#292524'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.x + ' Units (Relative Cost)';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Relative Cost Impact',
+                                font: { weight: 'bold' }
+                            },
+                            grid: { color: '#e7e5e4' }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { font: { weight: '600' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTCOChart();
+            showPlayDetail('osvirt', document.querySelector('.play-block'));
+        });
+    </script>
+</body>
+</html>
